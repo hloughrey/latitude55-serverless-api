@@ -1,0 +1,32 @@
+service: latitude55-serverless-api
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-webpack
+  - serverless-offline
+  - serverless-plugin-aws-alerts
+  - serverless-plugin-canary-deployments
+custom:
+  webpack:
+    includeModules: true
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: "${opt:stage, env:STAGE, 'dev'}"
+  region: "${opt:region, 'eu-west-2'}"
+  profile: latitude55
+  logRetentionInDays: 30
+
+package:
+  individually: true
+
+functions:
+  location:
+    name: 'location-${self:provider.stage}'
+    handler: src/lambda/location/location.handler
+    events:
+      - http:
+          path: location
+          method: GET

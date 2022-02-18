@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@wk/functions/*": ["src/functions/*"],
+      "@wk/libs/*": ["src/libs/*"]
+    }
+  }
+}
